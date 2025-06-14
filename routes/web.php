@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ThreadController;
 use App\Livewire\Show\ShowThreads;
 use App\Livewire\Show\ShowThread;
 
@@ -10,21 +11,21 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('/dashboard', ShowThreads::class)
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', ShowThreads::class)->name('dashboard');
 
-    Route::get('/thread/{threads}', ShowThread::class)
-    ->middleware(['auth', 'verified'])
-    ->name('thread');
+    Route::get('/thread/{threads}', ShowThread::class)->name('thread');
 
+    Route::resource('threadView', ThreadController::class)
+        ->parameters(['threadView' => 'thread'])
+        ->except(['show', 'destroy', 'index']);
 
-Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
     Volt::route('settings/password', 'settings.password')->name('settings.password');
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 });
+
 
 require __DIR__.'/auth.php';

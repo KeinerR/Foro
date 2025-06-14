@@ -14,6 +14,15 @@ class Thread extends Model
     /** @use HasFactory<\Database\Factories\ThreadFactory> */
     use HasFactory;
 
+    protected $fillable =[
+      'category_id',
+      'user_id',
+      'title',
+      'content',
+
+
+    ];
+
 
     public function user():BelongsTo{
         return $this->belongsTo(User::class);

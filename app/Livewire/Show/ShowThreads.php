@@ -26,6 +26,7 @@ public function filterByCategory($category){
         if($this->category){
           $threads->where('category_id',$this->category);
         }
+        $threads->with(['user','category']);
         $threads->withCount('replies');
         $threads->latest();
 

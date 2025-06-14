@@ -2,7 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\Reply\Reply;
+use App\Models\Thread;
+use App\Policies\RepliPolice;
+use App\Policies\ThreadPolicy;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +24,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+    Gate::policy(Reply::class, RepliPolice::class);
+    Gate::policy(Thread::class, ThreadPolicy::class);
+
+    
+
     }
 }

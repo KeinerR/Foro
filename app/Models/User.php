@@ -3,7 +3,10 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Models\Reply\Reply;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
@@ -63,6 +66,10 @@ class User extends Authenticatable
     public function avatar(){
          return 'https://gravatar.com/avatar/' . md5(strtolower(trim($this->email))) . '?s=50';
 
+    }
+
+    public function replies():HasMany{
+        return $this->hasMany(Reply::class);
     }
 
 }

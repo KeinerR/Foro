@@ -1,4 +1,4 @@
-<div class="mx-w-4xl mx-auto px-4 sm:px-6 lg:px-8 flex gap-10 py-12">
+<div class="mx-w-4xl mx-auto px-4 sm:px-6 lg:px-8  gap-10 py-12">
     
 
 
@@ -33,7 +33,20 @@
         </div>
       </div>
 
-      <!---- respuestas ----->
+      <div wire:key="replies-list" wire:on="refresh-replies">
+    @foreach($replies as $reply)
+        @livewire('show-reply', ['reply' => $reply], key($reply->id))
+    @endforeach
+</div>
+
+     <form wire:submit="postReply">
+        
+      <input type="text"
+      placeholder="escriber una respuesta"
+      class=" bg-slate-800  border-0 rounded-md w-full p-3 text-white/60 text-xs "
+      wire:model.defer='body'
+      >
+     </form>
       <!---- formulario ----->
 
 </div>
